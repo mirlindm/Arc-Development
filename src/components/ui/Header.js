@@ -109,7 +109,12 @@ function ElevationScroll(props) {
           backgroundColor: theme.palette.common.arcOrange
       },
       drawerItemSelected: {
-          opacity: 1
+          "& .MuiListItemText-root": {
+            opacity: 1
+          }
+      },
+      appbar: {
+          zIndex: theme.zIndex.modal + 1
       }   
   }))
 
@@ -147,65 +152,39 @@ export default function Header(props) {
         setSelectedIndex(i);
     }
 
-    const menuOptions = [{name: "Services", link: "/services"}, {name: "Custom Software Development", link: "/customsoftware"},
-                        {name: "Mobile App Development", link: "/mobileapps"}, {name: "Website Development", link: "/websites"}];
+    const menuOptions = [
+        {name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0}, 
+        {name: "Custom Software Development", link: "/customsoftware", activeIndex: 1, selectedIndex: 1},
+        {name: "Mobile App Development", link: "/mobileapps", activeIndex: 1, selectedIndex: 2}, 
+        {name: "Website Development", link: "/websites", activeIndex: 1, selectedIndex: 3}
+    ];
 
-    useEffect(() => {        
-        switch(window.location.pathname) {
-            case "/": 
-                if(value !== 0){
-                    setValue(0);
-                }
-                break;
-            case "/services":
-                if(value !== 1){
-                    setValue(1);
-                    setSelectedIndex(0);
-                }
-                break;
-            case "/customsoftware": 
-                if(value !== 1){
-                    setValue(1)
-                    setSelectedIndex(1)
-                } 
-                break;
-            case "/mobileapps": 
-                if(value !== 1){
-                    setValue(1);
-                    setSelectedIndex(2);
-                }
-                break;
-            case "/websites": 
-                if(value !== 1){
-                    setValue(1)
-                    setSelectedIndex(3)
-                }
-                break;
-            case "/revolution": 
-                if(value !== 2){
-                    setValue(2)                    
-                }
-                break;
-            case "/about": 
-                if(value !== 3){
-                    setValue(3)                    
-                }
-                break;                
-            case "/contact": 
-                if(value !== 4){
-                    setValue(4)                    
-                }
-                break;        
-            case "/estimate": 
-                if(value !== 5){
-                    setValue(5)                    
-                }
-                break;                                
-            default:
-                break;    
-        }
-    }, [value])
+    const routes = [
+        {name: "Home", link: "/", activeIndex: 0}, 
+        {name: "Services", link: "/services", activeIndex: 1, ariaOwns: anchorEl ? "simple-menu" : undefined, ariaPopup: anchorEl ? "true" : undefined, mouseOver: event => handleClick(event)}, 
+        {name: "Revolution", link: "/revolution", activeIndex: 2}, 
+        {name: "About Us", link: "/about", activeIndex: 3}, 
+        {name: "Contact Us",link: "/contact", activeIndex: 4}
+    ];
 
+    useEffect(() => {
+        [...menuOptions, ...routes].forEach(route => {
+            switch(window.location.pathname) {
+                case `${route.link}`:
+                    if(value !== route.activeIndex) {
+                        setValue(route.activeIndex)
+                        if(route.selectedIndex && route.selectedIndex !== selectedIndex) {
+                            setSelectedIndex(route.selectedIndex)
+                        }
+                    }
+                    break;                    
+                default:
+                    break;
+            }
+        });
+    }, [value, menuOptions, selectedIndex, routes]) 
+        
+    
     const tabs = (
         <React.Fragment>
             <Tabs 
@@ -214,15 +193,13 @@ export default function Header(props) {
                 onChange={handleChange}
                 indicatorColor="secondary"
             >
-                <Tab className={classes.tab} component={Link} to='/' label="Home"/>
-                <Tab aria-owns={anchorEl ? "simple-menu" : undefined}
-                    aria-haspopup={anchorEl ? "true" : undefined} 
-                    onMouseOver={event => handleClick(event)}
-                    className={classes.tab} component={Link} to='/services' label="Services"
-                />
-                <Tab className={classes.tab} component={Link} to='/revolution' label="The Revolution"/>
-                <Tab className={classes.tab} component={Link} to='/about' label="About Us"/>
-                <Tab className={classes.tab} component={Link} to='/contact' label="Contact Us"/>
+                {routes.map((route, index) => (
+                    <Tab key={`${route}${index}`} className={classes.tab} component={Link} 
+                        to={route.link} label={route.name} 
+                        aria-owns={route.ariaOwns}
+                        aria-haspopup={route.ariaPopup}
+                        onMouseOver={route.mouseOver}/>                 
+                ))}                
             </Tabs>
 
             <Button variant="contained" color="secondary" className={classes.button}>
@@ -234,10 +211,12 @@ export default function Header(props) {
                 MenuListProps={{onMouseLeave: handleClose}}
                 classes={{paper: classes.menu}}
                 elevation={0}
+                style={{zIndex: 1302}}
+                keepMounted
             >
 
             {menuOptions.map((option, i) => (
-                <MenuItem key={option} component={Link} to={option.link} 
+                <MenuItem key={`${option}${i}`} component={Link} to={option.link} 
                     classes={{root: classes.menuItem}} 
                     onClick={(event) => {handleMenuItemClick(event, i); setValue(1); handleClose()}} 
                     selected={i === selectedIndex && value === 1}
@@ -258,24 +237,22 @@ export default function Header(props) {
                 onOpen={() => setOpenDrawer(true)}
                 classes={{paper: classes.drawer}}
             > 
+                <div className={classes.toolbarMargin} />                
                 <List disablePadding>
-                    <ListItem onClick={() => {setOpenDrawer(false); setValue(0)}} divider button component={Link} to="/" selected={value === 0}>
-                        <ListItemText className={value === 0 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} disableTypography>Home</ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => {setOpenDrawer(false); setValue(1)}} divider button component={Link} to="/services" selected={value === 1}>
-                        <ListItemText className={value === 1 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} disableTypography>Services</ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => {setOpenDrawer(false); setValue(2)}} divider button component={Link} to="/revolution" selected={value === 2}>
-                        <ListItemText className={value === 2 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} disableTypography>Revolution</ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => {setOpenDrawer(false); setValue(3)}} divider button component={Link} to="/about" selected={value === 3}>
-                        <ListItemText className={value === 3 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} disableTypography>About Us</ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => {setOpenDrawer(false); setValue(4)}} divider button component={Link} to="/contact" selected={value === 4}>
-                        <ListItemText className={value === 4 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} disableTypography>Contact Us</ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => {setOpenDrawer(false); setValue(5)}} divider button component={Link} to="/estimate" className={classes.drawerItemEstimate} selected={value === 5}>
-                        <ListItemText className={value === 5 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} disableTypography>Free Estimate</ListItemText>
+                    {routes.map(route => (
+                        <ListItem key={`${route}${route.activeIndex}`} 
+                            divider button component={Link} to={route.link} 
+                            selected={value === route.activeIndex}
+                            classes={{selected: classes.drawerItemSelected}} 
+                            onClick={() => {setOpenDrawer(false); setValue(route.activeIndex)}}>
+                            <ListItemText className={classes.drawerItem} disableTypography>
+                                {route.name}
+                            </ListItemText>
+                        </ListItem>
+                    ))}
+
+                    <ListItem onClick={() => {setOpenDrawer(false); setValue(5)}} divider button component={Link} to="/estimate" classes={{root: classes.drawerItemEstimate, selected: classes.drawerItemSelected}} selected={value === 5}>
+                        <ListItemText className={classes.drawerItem} disableTypography>Free Estimate</ListItemText>
                     </ListItem>
                 </List>
             </SwipeableDrawer>
@@ -288,7 +265,7 @@ export default function Header(props) {
     return (
         <React.Fragment>
             <ElevationScroll> 
-                <AppBar position="fixed">
+                <AppBar position="fixed" className={classes.appbar}>
                     <Toolbar disableGutters>
                         <Button component={Link} to="/" 
                             className={classes.logoContainer} 
