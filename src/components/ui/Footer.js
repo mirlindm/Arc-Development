@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
+import Hidden from '@material-ui/core/Hidden';
 
 
 import footerAdornment from '../../assets/Footer Adornment.svg'
@@ -39,72 +40,74 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Footer() {
+export default function Footer(props) {
     const classes = useStyles();
 
     return (
         <footer className={classes.footer}>
-            <Grid container justify="center" className={classes.mainContainer}>
-                <Grid item className={classes.gridItem}> 
-                    <Grid container direction="column" spacing={2}>
-                        <Grid item className={classes.link} component={Link} to="/">
-                            Home
+            <Hidden mdDown>
+                <Grid container justify="center" className={classes.mainContainer}>
+                    <Grid item className={classes.gridItem}> 
+                        <Grid container direction="column" spacing={2}>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(0)} to="/">
+                                Home
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item className={classes.gridItem}>
-                    <Grid container direction="column" spacing={2}>
-                        <Grid item className={classes.link} component={Link} to="/services">
-                            Services
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/customsoftware">
-                            Custom Software Development
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/mobileapps">
-                            Mobile App Development
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/websites">
-                            Website Development
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item className={classes.gridItem}>
-                    <Grid container direction="column" spacing={2}>
-                        <Grid item className={classes.link} component={Link} to="/revolution"> 
-                            Revolution
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/revolution"> 
-                            Vision
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/revolution"> 
-                            Technology
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/revolution"> 
-                            Process
+                    <Grid item className={classes.gridItem}>
+                        <Grid container direction="column" spacing={2}>
+                            <Grid item className={classes.link} component={Link} onClick={()=> {props.setValue(1); props.setSelectedIndex(0)}} to="/services">
+                                Services
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> {props.setValue(1); props.setSelectedIndex(1)}} to="/customsoftware">
+                                Custom Software Development
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> {props.setValue(1); props.setSelectedIndex(2)}} to="/mobileapps">
+                                Mobile App Development
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> {props.setValue(1); props.setSelectedIndex(3)}} to="/websites">
+                                Website Development
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item className={classes.gridItem}>
-                    <Grid container direction="column" spacing={2}>
-                        <Grid item className={classes.link} component={Link} to="/about">
-                            About Us
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/about">
-                            History
-                        </Grid>
-                        <Grid item className={classes.link} component={Link} to="/about">
-                            Team
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item className={classes.gridItem}> 
-                    <Grid container direction="column" spacing={2}>
-                        <Grid item className={classes.link} component={Link} to="/contact">
-                            Contact Us
+                    <Grid item className={classes.gridItem}>
+                        <Grid container direction="column" spacing={2}>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(2)} to="/revolution"> 
+                                Revolution
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(2)} to="/revolution"> 
+                                Vision
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(2)} to="/revolution"> 
+                                Technology
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(2)} to="/revolution"> 
+                                Process
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Grid>
+                    <Grid item className={classes.gridItem}>
+                        <Grid container direction="column" spacing={2}>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(3)} to="/about">
+                                About Us
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(3)} to="/about">
+                                History
+                            </Grid>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(3)} to="/about">
+                                Team
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item className={classes.gridItem}> 
+                        <Grid container direction="column" spacing={2}>
+                            <Grid item className={classes.link} component={Link} onClick={()=> props.setValue(4)} to="/contact">
+                                Contact Us
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid> 
+            </Hidden>
             <img 
                 alt="black decorative slash" 
                 src={footerAdornment} 
