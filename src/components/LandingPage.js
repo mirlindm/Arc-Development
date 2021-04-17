@@ -1,6 +1,7 @@
 import React from 'react';
 import Lottie from 'react-lottie';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonArrow from './ui/ButtonArrow';
@@ -145,10 +146,10 @@ export default function LandingPage() {
                        <Typography variant="h2" align="center"> Bringing West Coast Technology <br/> to the Midwest</Typography>
                        <Grid container justify="center" className={classes.buttonContainer}>
                             <Grid item>
-                                <Button className={classes.estimateButton} variant="contained"> Free Estimate</Button>
+                                <Button component={Link} to="/estimate" className={classes.estimateButton} variant="contained"> Free Estimate</Button>
                             </Grid>
                             <Grid item>
-                                <Button variant="outlined" className={classes.learnButtonHero}> 
+                                <Button variant="outlined" className={classes.learnButtonHero} component={Link} to="/revolution"> 
                                     <span style={{marginRight: 10}}> Learn More </span> 
                                     <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
                                 </Button>
@@ -181,7 +182,7 @@ export default function LandingPage() {
                             Complete digital solutions, from investigation to{" "} 
                             <span className={classes.specialText}>celebration.</span>
                         </Typography>
-                        <Button className={classes.learnButton} variant="outlined">
+                        <Button className={classes.learnButton} variant="outlined" component={Link} to="/customsoftware">
                             <span style={{marginRight: 10}}> Learn More </span> 
                             <ButtonArrow width={10} height={10} fill={theme.palette.common.arcBlue} />
                         </Button>
@@ -210,7 +211,7 @@ export default function LandingPage() {
                             standalone app {matchesSM ? null : <br/>}with either mobile platform. 
                             
                         </Typography>
-                        <Button className={classes.learnButton} variant="outlined">
+                        <Button className={classes.learnButton} variant="outlined" component={Link} to="/mobileapps">
                             <span style={{marginRight: 10}}> Learn More </span> 
                             <ButtonArrow width={10} height={10} fill={theme.palette.common.arcBlue} />
                         </Button>
@@ -236,7 +237,7 @@ export default function LandingPage() {
                         <Typography variant="subtitle1">
                             Optimized for Search Engines, built for speed.                            
                         </Typography>
-                        <Button className={classes.learnButton} variant="outlined">
+                        <Button className={classes.learnButton} variant="outlined" component={Link} to="/websites">
                             <span style={{marginRight: 10}}> Learn More </span> 
                             <ButtonArrow width={10} height={10} fill={theme.palette.common.arcBlue} />
                         </Button>
@@ -260,7 +261,7 @@ export default function LandingPage() {
                                         Visionary Insights coupled with cutting-edge technogy
                                         is a recipe for a revolution.
                                     </Typography>
-                                    <Button variant="outlined" className={classes.learnButtonHero}> 
+                                    <Button variant="outlined" className={classes.learnButtonHero} component={Link} to="/revolution"> 
                                         <span style={{marginRight: 10}}> Learn More </span> 
                                         <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
                                     </Button>
@@ -289,7 +290,9 @@ export default function LandingPage() {
                                 </Typography>
                                 <Grid item>
                                     <Button className={classes.learnButton} variant="outlined" 
-                                            style={{color: "white", borderColor: "white"}}>
+                                            component={Link} to="/about"
+                                            style={{color: "white", borderColor: "white"}}
+                                    >
                                         <span style={{marginRight: 10}}> Learn More </span> 
                                         <ButtonArrow width={10} height={10} fill="white" />
                                     </Button>
@@ -310,7 +313,8 @@ export default function LandingPage() {
                                     Say hello! <span role="img" aria-label="waving hand">👋🏻</span>
                                 </Typography>
                                 <Grid item>
-                                    <Button className={classes.learnButton} variant="outlined" 
+                                    <Button className={classes.learnButton} variant="outlined"
+                                            component={Link} to="/contact" 
                                             style={{color: "white", borderColor: "white"}}>
                                         <span style={{marginRight: 10}}> Learn More </span> 
                                         <ButtonArrow width={10} height={10} fill="white" />

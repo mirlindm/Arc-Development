@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import {Link} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -67,7 +68,7 @@ export default function CallToAction (props) {
                         <Typography variant="h2"> Simple Software. <br/> Revolutionary Resulsts. </Typography>
                         <Typography variant="subtitle2" style={{fontSize: "1.5rem"}}> Take advantage of the 21st century. </Typography>
                         <Grid container justify={matchesSM ? "center" : undefined} item>
-                            <Button className={classes.learnButton} variant="outlined" >
+                            <Button className={classes.learnButton} variant="outlined" component={Link} to="/revolution">
                                 <span style={{marginRight: 5}}> Learn More </span> 
                                 <ButtonArrow width={10} height={10} fill={theme.palette.common.arcBlue} />
                             </Button>
@@ -76,7 +77,7 @@ export default function CallToAction (props) {
                 </Grid>
             </Grid>
             <Grid item>
-                <Button variant="contained" className={classes.esitmateButton}>Free Estimate</Button> 
+                <Button variant="contained" className={classes.esitmateButton} component={Link} to="/estimate">Free Estimate</Button> 
             </Grid>            
         </Grid>
     )
