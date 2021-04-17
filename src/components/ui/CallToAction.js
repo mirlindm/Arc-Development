@@ -42,6 +42,11 @@ const useStyles = makeStyles(theme => ({
         fontSize: "1.5rem",
         marginRight: "5em",
         marginLeft: "2em",
+        
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.light
+        },
+
         [theme.breakpoints.down('sm')] : {
             marginLeft: 0,
             marginRight: 0,
@@ -68,7 +73,10 @@ export default function CallToAction (props) {
                         <Typography variant="h2"> Simple Software. <br/> Revolutionary Resulsts. </Typography>
                         <Typography variant="subtitle2" style={{fontSize: "1.5rem"}}> Take advantage of the 21st century. </Typography>
                         <Grid container justify={matchesSM ? "center" : undefined} item>
-                            <Button className={classes.learnButton} variant="outlined" component={Link} to="/revolution">
+                            <Button className={classes.learnButton} 
+                                variant="outlined" component={Link} to="/revolution"
+                                onClick={() => props.setValue(2)}                                
+                            >
                                 <span style={{marginRight: 5}}> Learn More </span> 
                                 <ButtonArrow width={10} height={10} fill={theme.palette.common.arcBlue} />
                             </Button>
@@ -77,7 +85,10 @@ export default function CallToAction (props) {
                 </Grid>
             </Grid>
             <Grid item>
-                <Button variant="contained" className={classes.esitmateButton} component={Link} to="/estimate">Free Estimate</Button> 
+                <Button variant="contained" className={classes.esitmateButton}
+                    component={Link} to="/estimate"
+                    onClick={() => props.setValue(5)}
+                >Free Estimate</Button> 
             </Grid>            
         </Grid>
     )
